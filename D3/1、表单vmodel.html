@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+		<!--
+			VUE V-model绑定表单控件的Value
+			1、text、radio、checkbox、select、textarea
+			2、checkbox分为一组（多选）或者一个（判断是否）
+			  2.1 一组 一组box都要设置各自的value,并且要绑定同一个属性变量，还有就是data中属性变量在初始定义时必须为数组形式，不能为其他形式；、
+			  			选中后得到是每个已选box的Value数组；
+			  2.2 一个  不用设置value,绑定的data中的属性必须是字符串形式，不能再使用数组，选中后的得到是ture/false;
+			3、V-model修饰符  .trim、.lazy、.number
+		-->
+	<div id="root">	
+		姓名：<input type="text" v-model='people.name'/> <br>
+		年龄：<input type="number" v-model.number='people.age'> <br>
+		性别：
+		<input type="radio" name='sex' value='mile' v-model='people.sex'/>男
+		<input type="radio" name='sex' value='femile' v-model='people.sex'/>女 <br>
+		爱好：
+		<input type="checkbox" value='eat' v-model='people.hobby'>吃</input>
+		<input type="checkbox" value='drink' v-model='people.hobby'>喝</input>
+		<input type="checkbox" value='play' v-model='people.hobby'>玩</input>
+		<input type="checkbox" value='happly' v-model='people.hobby'>乐</input><br>
+		出行工具：
+		<select v-model='people.traffic'>
+			<option value="car">汽车</option>
+			<option value="bus">公交</option>
+			<option value="foot">步行</option>
+		</select><br>
+		备注：
+		<textarea v-model.lazy='people.demo'></textarea><br>
+		<input type="checkbox" v-model='people.isSelect'/>是否已阅读<br>
+		<button @click='submit'>提交</button>
+	</div>
+	<script type="text/javascript">
+		Vue.config.productionTip = false;
+		new Vue({
+			el: "#root",
+			data:{
+				people:{
+					name:'',
+					age:'',
+					sex:'',
+					hobby:[],
+					traffic:'',
+					isSelect:true,
+					demo:''
+				}
+			},
+			methods: {
+				submit(){
+					console.log(this.people);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

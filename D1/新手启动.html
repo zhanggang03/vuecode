@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<Label>a值:</Label>{{a}}
+		<Input type="button" @click="menthodNumber(2)" value="+2"></Input>
+		<br/>
+		<Label>b值:</Label>{{b}}
+		<br/>
+		<Label>c值:</Label>{{c}}
+		<br/>
+		<Label>事件默认值:</Label>
+		<Input type="button" @click="enentDefalt" value="Defalt"></Input>
+		<br/>
+		<Label>computeNumber值:</Label>{{computeNumber}}
+		<br/>
+		<ul>
+			<li v-for="(p,index) in friends" :key="p.id">{{p.name}} -- {{p.sex}} -- {{index}}</li>
+		</ul>
+		<br/>
+		<Label>filter值:</Label>{{c | filterNumber1(1) | filterNumber2}}
+	</div>
+	<script type="text/javascript">
+		Vue.config.productionTip = false;
+		new Vue({
+			el: "#root",
+			data:{
+				a:1,
+				b:6,
+				c:2,
+				friends:[{id:001,name:"张三", age:"18", sex:"男"},
+						  {id:002,name:"李四", age:"16", sex:"女"},]
+			},
+			methods: {
+				menthodNumber(value){
+					this.a = value + this.a;
+				},
+				enentDefalt(event){
+					console.log(event);
+				}
+			},
+			computed: {
+				computeNumber(){
+					return this.a + 1;
+				}
+			},
+			watch: {
+				/* a(newValue, oldValue){
+					console.log(newValue,"@",oldValue);
+					this.b = newValue;
+				} */
+				a:{
+					immediate : true,
+					handler(newValue, oldValue){
+						console.log(newValue,"@",oldValue);
+						this.b = newValue;
+					}
+				}
+			},
+			filters: {
+				filterNumber1(value,addN){
+					console.log(value,"@",addN);
+					return value + addN;
+				},
+				filterNumber2(value){
+					console.log(value);
+					return value + 4;
+				}
+			}
+		})
+	</script>
+</body>
+</html>

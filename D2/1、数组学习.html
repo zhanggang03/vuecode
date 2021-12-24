@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+	<div id="root">	
+		<ul>
+			<li v-for="(p,index) in friends" :key="p.id">{{p.name}} -- {{p.sex}} -- {{p.age}} -- {{index}}</li>
+		</ul>
+		<br/>
+		<!--
+			VUE 数组方法劫持的有7个push、pop、unshift、shift、sort(升序，前面-后面； 降序，后面-前面)、splice、reverse
+		-->
+		<input type="button" @click='pushOne' value="尾部追加"/>
+		<input type="button" @click='popOne' value="尾部删除"/>
+		<input type="button" @click='unshiftOne' value="头部追加"/>
+		<input type="button" @click='shiftOne' value="头部删除"/>
+		<input type="button" @click='sortUp' value="升序排序"/>
+		<input type="button" @click='sortDown' value="降序排序"/>
+		<input type="button" @click='spliceOne' value="替换一个"/>
+		<input type="button" @click='reverses' value="反转"/>
+	</div>
+	<script type="text/javascript">
+		Vue.config.productionTip = false;
+		new Vue({
+			el: "#root",
+			data:{
+				friends:[{id:001,name:"张三", age:18, sex:"男"},
+						 {id:002,name:"李四", age:16, sex:"女"},]
+			},
+			methods: {
+				pushOne(){
+					this.friends.push({id:003,name:"王五",age:19, sex:"男"});
+				},
+				popOne(){
+					this.friends.pop();
+				},
+				unshiftOne(){
+					this.friends.unshift({id:000,name:"刘六",age:1, sex:"女"});
+				},
+				shiftOne(){
+					this.friends.shift();
+				},
+				sortUp(){
+					this.friends.sort((a,b) => a.age-b.age);
+				},
+				sortDown(){
+					this.friends.sort((a,b) => b.age-a.age);
+				},
+				spliceOne(){
+					this.friends.splice(1,2,{id:010,name:"赵七",age:6, sex:"男"});
+				},
+				reverses(){
+					this.friends.reverse();
+				},
+			}
+		})
+	</script>
+</body>
+</html>

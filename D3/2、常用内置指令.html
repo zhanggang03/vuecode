@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/css">
+		[v-cloak]{
+			display: none;
+		}
+	</script>
+</head>
+<body>
+	<!--
+		本篇所涉及到的指令不包括v-bing,v-on,v-model
+		1、v-if,v-else-if,v-else;  包含有if,elseif,else的VUE指令标签，必须连用；中间不能包含有其他不含此类指令的标签，否则后面未连接上的语句将会无效
+		2、v-if与<template>合用，控制一组空间的展示
+		3、v-for 展示对象数组,参数依次为（object，index），如果只使用object，可以不用括号,如果不明写绑定key（VUE内部使用的重要属性），则默认使用数组的index，
+						 这样造成数组发生变化时，index也会随着变化，特别是v-for中展示可编辑控件时，数组变化引起显示错误；
+						最好是采用唯一不变的属性绑定key值；
+	    4、v-for 展示对象，参数依次为(key,value,index)；
+		5、v-for 展示普通数组；
+		6、v-text  获取绑定的内容，解析为普通字符串，代替标签中的全部内容
+		7、v-html  获取绑定的内容，解析为HTML格式的元素内容，代替标签中的全部内容
+		8、v-cloak  单独使用（不带=内容），当VUE加载完成后，彻底移除这一指令属性；
+		9、v-once  vue加载时只解析一次，后面不在进行VUE相关的解析；
+		10、v-show 展示或者隐藏
+	-->
+	<div id="root">		
+		1、v-if:
+		<label v-if='isExist1 === 1'>1</label>
+		<label v-else-if='isExist1 === 2'>2</label>
+		<label v-else>3</label><br>
+		2、v-if:
+		<template v-if='isExist2'>
+			<label>张三</label>
+			<label>李四</label>
+			<label>王五</label>
+		</template><br>
+		3、v-for:
+		<ul>
+			<li v-for="(p,index) in friends" :key="p.id">{{p.name}} -- {{p.sex}} -- {{index}}</li>
+		</ul><br>
+		4、v-for:
+		<ul>
+			<li v-for="(key,val,index) in people" :key="key">{{key}} -- {{val}} -- {{index}}</li>
+		</ul><br>
+		5、v-for:
+		<ul>
+			<li v-for="(p,index) in number">{{p}} -- {{index}}</li>
+		</ul><br>
+		6、v-text:
+		<label v-text='text'>1</label><br>
+		7、v-html:
+		<label v-html='html'>1</label><br>
+		8、v-cloak:
+		<label v-cloak>1</label><br>
+		9、v-cloak:
+		<label v-once>{{once}}</label><br>
+		10、v-show:
+		<label v-show='show'>{{show}}</label><br>
+	</div>
+	<script type="text/javascript">
+		Vue.config.productionTip = false;
+		new Vue({
+			el: "#root",
+			data:{
+				isExist1 : 1,
+				isExist2 : true,
+				friends:[{id:001,name:"张三", age:"18", sex:"男"},
+						 {id:002,name:"李四", age:"16", sex:"女"},],
+				people:{
+					name:'张三',
+					age:18,
+					sex:'男'
+				},
+				number:[1,3,4],
+				text:'ffffff',
+				html:'<h2>ZZ</h2>',
+				once:'zhang',
+				show:true
+			},
+			methods: {
+				submit(){
+					console.log(this.people);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

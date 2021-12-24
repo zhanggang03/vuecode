@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+	<div id="root">	
+		<!--
+			VUE默认监视 实例生成 时，data已定义的属性，如果要监视额外的，必须使用Vue.set(target,index,value)或者实例vm.$set();
+			VUE set
+			1、针对对象，可以对date下已有的对象类型内添加VUE可监视属性,而不能对VM和VM._data（根属性下）（两者一样）添加
+			2、针对数据，除了7个VUE能够监测到的方法外，也可以使用set改变，而被VUE监测到，并且数组中对象的各个属性也能被监控到
+		-->
+		<button class="button" @click="addAgeAttr">AddAgeAttr</button>
+		<button class="button" @click="addFriend">AddFriend</button>
+		<br>
+		人物：
+		{{person.id}} -- {{person.name}} -- {{person.age}}
+		<br>
+		朋友：
+		<br>
+		<ul>
+			<li v-for="p in friends" :key="p.id">{{p.name}} -- {{p.sex}} -- {{p.age}}</li>
+		</ul>	
+	</div>
+		<script type="text/javascript">
+		Vue.config.productionTip = false;
+		const vm = new Vue({
+			el: "#root",
+			data:{
+				person:{
+					id:001,
+					name:"张三"
+				},
+				friends:[{id:001,name:"张三", age:18, sex:"男"},
+						 {id:002,name:"李四", age:16, sex:"女"},]
+			},
+			methods: {
+				/* addAgeAttr(){
+					Vue.set(this.person,"age",18);
+				} */
+				addAgeAttr(){
+					this.$set(this.person,"age",18);
+				},
+				addFriend(){
+					this.$set(this.friends,2,{id:003,name:"张六", age:18, sex:"男"});
+				}
+			},
+		})
+	</script>
+</body>
+</html>

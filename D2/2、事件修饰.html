@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+	<style type="text/css">
+		.out {
+			background: antiquewhite;
+			height: 200;
+			width: 200;
+		}
+
+		.middle {
+			margin: 0 auto;
+			background: cadetblue;
+			height: 100;
+			width: 100;
+		}
+
+		.button {
+			height: 30;
+		}
+	</style>
+</head>
+<body>
+	<div id="root">	
+		<!--
+			VUE 事件修饰
+			1、stop  阻止事件冒泡  可以控制到具体外部哪一层
+			2、prevent  阻止默认事件  可用于<a> <form>标签
+			3、capture 捕获冒泡  即有冒泡发生时，有该修饰符的dom元素会先执行，如果有多个，从外到内依次执行，然后再按自然顺序执行触发的事件
+			4、self 将事件绑定到自身，只有自身才能触发，通常用于避免冒泡事件的影响
+			5、once 设置事件只能触发一次，比如按钮的点击,但是依然可以向外冒泡
+			6、passive 无
+		-->
+		<div class="out" @click="outer"> 
+			<div class="middle" @click.stop="middler"> 
+			　　　<button class="button" @click="stopEvent">stop</button>
+			</div>
+		</div> 
+		<br/><br/>
+		<a href="www.baidu.com" @click.prevent='preventEvent'>prevent</a>
+		<br/><br/>
+		<div class="out" @click.capture="outer"> 
+			<div class="middle" @click="middler"> 
+			　　　<button class="button" @click="captureEvent">capture</button>
+			</div>
+		</div> 
+		<br/><br/>
+		<div class="out" @click="outer"> 
+			<div class="middle" @click.self="middler"> 
+			　　　<button class="button" @click="selfEvent">self</button>
+			</div>
+		</div> 
+		<br/><br/>
+		<div class="out" @click="outer"> 
+			<div class="middle" @click="middler"> 
+			　　　<button class="button" @click.once="onceEvent">once</button>
+			</div>
+		</div> 
+	</div>
+	<script type="text/javascript">
+		Vue.config.productionTip = false;
+		new Vue({
+			el: "#root",
+			data:{
+			},
+			methods: {
+				outer(){
+					console.log("outer");
+				},
+				middler(){
+					console.log("middler");
+				},
+				stopEvent(){
+					console.log("stopEvent");
+				},
+				preventEvent(){
+					console.log("preventEvent");
+				},
+				captureEvent(){
+					console.log("captureEvent");
+				},
+				selfEvent(){
+					console.log("selfEvent");
+				},
+				onceEvent(){
+					console.log("onceEvent");
+				},
+			}
+		})
+	</script>
+</body>
+</html>

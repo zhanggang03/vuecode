@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta content="UTF-8">
+    <title>VUE</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+		<!--
+			VUE 常用的4对生命钩子
+			生命钩子对应的this都是VM实例
+			1、beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、beforeDestroy、destroyed
+			2、其中mounted、beforeDestroy最为常用
+			   2.1、 mounted 容器元素（真实DOM）完全展示后的钩子，此时可以正常使用VM中对应的属性、事件等,用于生成定时器、订阅事件等初始化操作；
+			   2.2、beforeDestroy 在VM实例即将销毁前，用于释放定时器、取消所订阅的事件等操作；事件销毁后，就不能再使用VM中的data、watch、computed、自定义事件等监控属性，
+			   但是DOM所绑定的普通事件还是可以操作的；
+		-->
+	<div id="root">	
+		姓名：<input type="text" v-model='people.name'/> <br>
+		<button @click='destoryPage'>销毁</button>
+	</div>
+	<script type="text/javascript">
+		Vue.config.productionTip = false;
+		new Vue({
+			el: "#root",
+			data:{
+				people:{
+					name:'',
+				},
+				count:0
+			},
+			methods: {
+				destoryPage(){
+					console.log('destoryPage');
+					this.$destroy();
+				}
+			},
+			beforeCreate() {
+				console.log('beforeCreate');
+			},
+			created() {
+				console.log('created');
+			},
+			beforeMount() {
+				console.log('beforeMount');
+			},
+			mounted() {
+				this.intervalId = setInterval(()=>{
+					console.log(this.count);
+					this.count ++ ;
+					if(this.count > 10){
+						this.count = 0;
+					}
+				},1000)
+				console.log('mounted');
+			},
+			beforeUpdate() {
+				console.log('beforeUpdate');
+			},
+			updated(a) {
+				console.log('updated');
+			},
+			beforeDestroy() {
+				clearInterval(this.intervalId);
+				console.log('beforeDestroy');
+			},
+			destroyed() {
+				console.log('destroyed');
+			},
+		})
+	</script>
+</body>
+</html>
